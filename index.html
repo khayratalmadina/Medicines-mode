@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>متجر طبي - واجهة رئيسية</title>
+  <title>مذخر فيتامين </title>
   <!-- Bootstrap 5 مع RTL -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <!-- خط Cairo -->
@@ -11,9 +11,9 @@
   <style>
     /* تعريف ألوان متجر طبي */
     :root {
-      --primary-color: #1976D2;   /* أزرق قوي */
+      --primary-color: #043668;   /* أزرق قوي */
       --secondary-color: #66BB6A; /* أخضر فاتح */
-      --accent-color: #BBDEFB;    /* أزرق فاتح */
+      --accent-color: #097ad6;    /* أزرق فاتح */
       --background: #E3F2FD;      /* خلفية زرقاء فاتحة */
       --sidebar-bg: #ffffff;
       --modal-bg: rgba(0, 0, 0, 0.7);
@@ -545,8 +545,11 @@
   <div class="main-content">
     <header>
       <div>
-        <h1><i><b>متجر الأدوية</b></i></h1>
-        <p><i>اكتشف أحدث الأدوية والعلاجات</i></p>
+        <h1><i><b> مذخر فيتامين</b></i></h1>
+        <p><i>اكتشف أحدث الأدوية والعلاجات
+<br>
+          07808560009
+        </i></p>
       </div>
       <div>
         <div class="member-count d-inline-block me-3">
@@ -642,9 +645,31 @@
   <script>
     /* بيانات المنتجات الثابتة */
     const products = [
-      { id: 1, name: "نورمل سلاين 100ml", details: "كارتون 100 قطعة", price: 65000, quantity: 0, image: "https://scontent.fnjf1-2.fna.fbcdn.net/v/t39.30808-6/480124735_n.jpg" },
-      { id: 2, name: "paracetamol 100ml", details: "سعر البطل", price: 1600, quantity: 0, image: "https://scontent.fnjf1-4.fna.fbcdn.net/v/t39.30808-6/480024026_n.jpg" },
-      { id: 3, name: "نورمل سلاين 500ml", details:"الكارتون يحتوي على 30 بطل سعر بطل 1450", price: 43500, quantity: 0, image: "https://scontent.fnjf1-2.fna.fbcdn.net/v/t39.30808-6/480002321_n.jpg" }
+      { id: 1, name: " pulmocodin 100ml. ", details: "    ", price: 2100, quantity: 0, image: "https://i.ibb.co/3VyZ8wK/photo.jpg" },
+      { id: 2, name: " COLDIN 100ml  ", details: "    ", price: 1275, quantity: 0, image: "https://i.ibb.co/7xBrkTZZ/photo.jpg" },
+      { id: 3, name: " Allermine100ml  ", details: "    ", price: 65000, quantity: 0, image: "https://i.ibb.co/hxz9MtBd/photo.jpg" },
+      { id: 4, name: "  samadol ", details: "    ", price:865, quantity: 0, image: "https://i.ibb.co/CSyyk1v/photo.jpg" },
+      { id: 5, name: " AVO-D  ", details: "    ", price: 4000, quantity: 0, image: "https://i.ibb.co/SW0rt7D/photo.jpg" },
+      { id: 6, name: "  Fucisam ", details: "    ", price: 1430, quantity: 0, image: "https://i.ibb.co/F4KTjbMy/photo.jpg" },
+      { id: 7, name: "SEDILAR", details: "    ", price: 14500, quantity: 0, image: "https://i.ibb.co/Mkn2VSnN/photo.jpg" },
+      { id: 8, name: " سامادول  ", details: "    ", price: 1275, quantity: 0, image: "https://i.ibb.co/tMWh8rQk/photo.jpg" },
+      { id: 9, name: "  SAMACYCLINE ", details: "    ", price:820, quantity: 0, image: "https://i.ibb.co/4np8xyTK/photo.jpg" },
+      { id: 10, name: " Folic acid  ", details: "    ", price:999, quantity: 0, image: "https://i.ibb.co/tp454RtJ/photo.jpg" },
+      { id: 11, name: " NYSTACORT  ", details: "    ", price: 990, quantity: 0, image: "https://i.ibb.co/RpMVHFkv/photo.jpg" },
+      { id: 12, name: " Butadin  ", details: "    ", price: 10420, quantity: 0, image: "https://i.ibb.co/F4Vqw1XP/photo.jpg" },
+      { id: 13, name: " Lorasam  ", details: "    ", price:805, quantity: 0, image: "https://i.ibb.co/Xxf9FMHx/photo.jpg" },
+      { id: 14, name: " ANTIPYROL CHILDREN  ", details: "    ", price: 1450, quantity: 0, image: "https://i.ibb.co/tMwLyz6n/photo.jpg" },
+      { id: 15, name: "  LIBRAXAM ", details: "    ", price: 19750, quantity: 0, image: "https://i.ibb.co/xt057kxz/photo.jpg" },
+      { id: 16, name: " SAMAVIT B6  ", details: "    ", price: 15000, quantity: 0, image: "https://i.ibb.co/BxQ4Qgt/photo.jpg" },
+      { id: 17, name: "  RAZYDYL ", details: "    ", price: 2500, quantity: 0, image: "https://i.ibb.co/Mxrc5cDK/photo.jpg" },
+      { id: 18, name: "  Handistan ", details: "    ", price: 1000, quantity: 0, image: "https://i.ibb.co/h1TB5RwZ/photo.jpg" },
+      { id: 19, name: " Bactrim forte comprime  ", details: "    ", price:6500, quantity: 0, image: "https://i.ibb.co/whRPLF0f/photo.jpg" },
+      { id: 20, name: "Glucophage 850 mg", details: "    ", price: 12500, quantity: 0, image: "https://i.ibb.co/KzzjtSZ2/photo.jpg" },
+      { id: 20, name: "Neuro max +", details: "    ", price: 17000, quantity: 0, image: "https://i.ibb.co/20BNg77h/photo.jpg" },
+      { id: 20, name: "omnic Tocas", details: "    ", price: 19500, quantity: 0, image: "https://i.ibb.co/PsZJqNfr/photo.jpg" },
+      { id: 20, name: "Aircom6", details: "    ", price: 9000, quantity: 0, image: "https://i.ibb.co/rhzwv0f/photo.jpg" },
+      { id: 20, name: "tegretol CR", details: "    ", price: 20500, quantity: 0, image: "https://i.ibb.co/kVRgk7XH/photo.jpg" },
+
       // يمكن إضافة المزيد من المنتجات الثابتة هنا
     ];
     
