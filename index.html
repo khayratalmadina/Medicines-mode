@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>مذخر فيتامين </title>
+  <title>مذخر فيتامين</title>
   <!-- Bootstrap 5 مع RTL -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <!-- خط Cairo -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- إضافة مكتبات Firebase (الإصدار 8 لتسهيل الدمج مع الكود الحالي) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <style>
-    /* تعريف ألوان متجر طبي */
+    /* تعريف ألوان متجر كوزمتك */
     :root {
-      --primary-color: #043668;   /* أزرق قوي */
-      --secondary-color: #66BB6A; /* أخضر فاتح */
-      --accent-color: #097ad6;    /* أزرق فاتح */
-      --background: #E3F2FD;      /* خلفية زرقاء فاتحة */
+      --primary-color: #220762;   /* وردي حيوي */
+      --secondary-color: #02223d; /* بنفسجي */
+      --accent-color: #3748b7;    /* وردي فاتح */
+      --background: #ffffff;      /* خلفية وردية فاتحة */
       --sidebar-bg: #ffffff;
       --modal-bg: rgba(0, 0, 0, 0.7);
     }
@@ -237,7 +240,7 @@
       transition: background 0.3s;
     }
     .quantity-controls button:hover {
-      background: #2E7D32;
+      background: #7B1FA2;
     }
     .quantity-controls span {
       font-size: 1rem;
@@ -491,6 +494,53 @@
     .admin-section h3 {
       margin-bottom: 0.5rem;
     }
+    /* إضافة تنسيق للنوافذ المنبثقة الخاصة بلوحة الإدارة */
+    #admin-modal .admin-content {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    #admin-modal .admin-content:hover {
+      transform: scale(1.02);
+    }
+
+    /* تحسين تنسيق نماذج الإدخال في لوحة الإدارة */
+    #admin-modal input,
+    #admin-modal textarea {
+      width: 100%;
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    /* تخصيص ألوان الوضع الليلي للوحات الإدارة */
+    body.dark-mode #admin-modal .admin-content {
+      background: #2c3e50;
+      color: #ecf0f1;
+    }
+    
+    /* تحسينات للوضع الليلي */
+    body.dark-mode .sidebar {
+      background: #34495e;
+    }
+    body.dark-mode .sidebar .menu-item span.label {
+      color: #ecf0f1;
+    }
+    body.dark-mode .sidebar .menu-item svg {
+      fill: #ecf0f1;
+    }
+    body.dark-mode .product-card {
+      background: #34495e;
+      color: #ecf0f1;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    body.dark-mode .product-card .product-details {
+      color: #c7bdbd;
+    }
+    body.dark-mode .product-card .product-price {
+      color: var(--primary-color);
+    }
+    
   </style>
 </head>
 <body>
@@ -545,11 +595,8 @@
   <div class="main-content">
     <header>
       <div>
-        <h1><i><b> مذخر فيتامين</b></i></h1>
-        <p><i>اكتشف أحدث الأدوية والعلاجات
-<br>
-          07808560009
-        </i></p>
+        <h1><i><b>مذخر فيتامين</b></i></h1>
+        <p><i>اكتشف أفضل مستحضرات التجميل<br>07808560009</i></p>
       </div>
       <div>
         <div class="member-count d-inline-block me-3">
@@ -592,6 +639,19 @@
       <button class="modal-close" id="favorites-modal-close">&times;</button>
       <div id="favorites-content"></div>
     </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="clear-favorites">حذف جميع المفضلات</button>
+    </div>
+    <script>
+      document.getElementById("clear-favorites").addEventListener("click", function() {
+        if (confirm("هل أنت متأكد من حذف جميع المفضلات؟")) {
+          savedProducts = [];
+          localStorage.setItem("savedProducts", JSON.stringify(savedProducts));
+          document.getElementById("favorites-content").innerHTML = '<div class="modal-header"><h4>لا توجد منتجات محفوظة</h4></div>';
+          document.querySelectorAll(".save-btn.active").forEach(btn => btn.classList.remove("active"));
+        }
+      });
+    </script>
   </div>
   <div class="modal-overlay" id="most-sold-modal">
     <div class="modal-content" id="most-sold-modal-content">
@@ -642,25 +702,81 @@
     </div>
   </div>
   <br>
-  <br>
-  <br>
-  
+  <br><br>
   <script>
-    /* بيانات المنتجات الثابتة (يمكن استخدامها كبيانات أولية في حال لم يتم تحميل أي بيانات من Firestore) */
-    let products = [
-      { id: 1, name: "pulmocodin 100ml.", details: "", price: 2100, quantity: 0, image: "https://i.ibb.co/3VyZ8wK/photo.jpg" },
-      { id: 2, name: "COLDIN 100ml", details: "", price: 1275, quantity: 0, image: "https://i.ibb.co/7xBrkTZZ/photo.jpg" },
-      { id: 3, name: "Allermine100ml", details: "", price: 65000, quantity: 0, image: "https://i.ibb.co/hxz9MtBd/photo.jpg" },
-      { id: 21, name: "Isilin", details: "", price: 2400, quantity: 0, image: "https://i.ibb.co/3m3Ztd3w/Background-Eraser.jpg" },
-      // ... باقي المنتجات الثابتة
-    ];
-    
-    // هنا تظل بيانات localStorage الخاصة بالحفظ المؤقت أو المحفوظات، لكننا نعتمد بشكل أساسي على Firestore
+    (function(){
+      // إنشاء أيقونة الإدارة وإضافتها إلى الشريط الجانبي
+      const sidebar = document.getElementById('sidebar');
+      let adminIcon = document.createElement('div');
+      adminIcon.id = 'admin-icon';
+      adminIcon.title = 'إدارة المنتجات';
+      adminIcon.style.cursor = 'pointer';
+      adminIcon.style.marginTop = 'auto';
+      adminIcon.style.padding = '0.8rem';
+      adminIcon.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2a10 10 0 00-7.07 17.07A10 10 0 1012 2zm1 14.93h-2v-2h2v2zm0-4h-2V7h2v5.93z" fill="var(--primary-color)"/></svg>';
+      adminIcon.style.display = 'none';
+      sidebar.appendChild(adminIcon);
+  
+      // دالة لتحديث ظهور الأيقونة بحسب حالة الشريط (ممدود أو غير ممدود)
+      function updateAdminIconVisibility() {
+        adminIcon.style.display = sidebar.classList.contains('expanded') ? 'block' : 'none';
+      }
+      
+      // راقب تغيير صفات الشريط الجانبي حتى يتم تحديث ظهور أيقونة الإدارة
+      const observer = new MutationObserver(updateAdminIconVisibility);
+      observer.observe(sidebar, { attributes: true, attributeFilter: ['class'] });
+      
+      // عند النقر على أيقونة الإدارة تظهر مطالبة لإدخال الرمز
+      adminIcon.addEventListener('click', function(e){
+        e.stopPropagation();
+        const code = prompt("أدخل رمز الإدارة:");
+        if(code === "220016") {
+          document.getElementById("admin-modal").classList.add("active");
+        } else {
+          alert("رمز غير صحيح");
+        }
+      });
+    })();
+  
+    // إعدادات Firebase باستخدام بيانات مشروعك
+    const firebaseConfig = {
+      apiKey: "AIzaSyBcx6uXHzMK1HInEuFAmqsSBFvPAw86_Ts",
+      authDomain: "mohmed-mod.firebaseapp.com",
+      projectId: "mohmed-mod",
+      storageBucket: "mohmed-mod.firebasestorage.app",
+      messagingSenderId: "724585474855",
+      appId: "1:724585474855:web:a95c26f01cf062db5e9702",
+      measurementId: "G-34HJTJSXPZ"
+    };
+    // تهيئة Firebase والحصول على مرجع قاعدة البيانات (Firestore)
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+  
+    // تحديد معرف المتجر، يمكن تغييره لكل موقع
+    const storeId = 'store1'; // للموقع الأول، وبالنسبة للموقع الثاني قم بتغيير القيمة إلى 'store2'
+  
+    // المتغيرات العامة
+    let products = [];  // ستُملأ من قاعدة البيانات
     let cart = [];
     let savedProducts = JSON.parse(localStorage.getItem("savedProducts")) || [];
-    const mostSoldProductIds = [2, 5, 7, 10];
+    const mostSoldProductIds = ["2", "5", "7", "10"]; // لاحظ أن معرّفات المنتجات من Firestore هي سلاسل
   
-    // دالة عرض المنتجات (يتم استخدامها بعد جلب البيانات من Firestore)
+    // دالة تحميل المنتجات من Firestore مع فلترة حسب معرف المتجر
+    function loadProducts() {
+      db.collection("products").where("store", "==", storeId).get().then(querySnapshot => {
+        products = [];
+        querySnapshot.forEach(doc => {
+          let product = doc.data();
+          product.id = doc.id; // استخدام معرّف الوثيقة من Firestore
+          products.push(product);
+        });
+        renderProducts();
+      }).catch(error => {
+        console.error("Error fetching products: ", error);
+      });
+    }
+  
+    // دالة عرض المنتجات في الواجهة
     function renderProducts(productArray = products) {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = "";
@@ -697,11 +813,11 @@
         grid.appendChild(card);
       });
     }
-    
+  
     function isSaved(productId) {
       return savedProducts.includes(productId);
     }
-    
+  
     function toggleSave(productId, btn) {
       if (isSaved(productId)) {
         savedProducts = savedProducts.filter(id => id !== productId);
@@ -714,7 +830,7 @@
       }
       localStorage.setItem("savedProducts", JSON.stringify(savedProducts));
     }
-    
+  
     function updateQuantity(productId, change, btn) {
       const qtyEl = document.getElementById("qty-" + productId);
       let currentQty = parseInt(qtyEl.textContent);
@@ -736,7 +852,7 @@
         }
       }
     }
-    
+  
     function animateIndicator(btn, type) {
       const indicator = document.createElement("span");
       indicator.className = "indicator " + (type === 'plus' ? "plus-indicator" : "minus-indicator");
@@ -744,25 +860,25 @@
       const container = btn.parentElement;
       const btnLeft = btn.offsetLeft;
       const btnTop = btn.offsetTop;
-      const btnCenterX = btnLeft + btn.offsetWidth/2 - 10;
+      const btnCenterX = btnLeft + btn.offsetWidth / 2 - 10;
       indicator.style.left = btnCenterX + "px";
       indicator.style.top = btnTop + "px";
       container.appendChild(indicator);
       setTimeout(() => indicator.remove(), 500);
     }
-    
+  
     function filterProducts(query) {
       const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
       renderProducts(filtered);
     }
-    
+  
     function openCartModal() {
       const modalOverlay = document.getElementById("cart-modal");
       const dynamicContent = document.getElementById("modal-dynamic-content");
       dynamicContent.innerHTML = renderCartSummary();
       modalOverlay.classList.add("active");
     }
-    
+  
     function renderCartSummary() {
       if (cart.length === 0) {
         return `<div class="modal-header"><h4>سلة الشراء فارغة</h4></div>`;
@@ -783,11 +899,11 @@
         <button class="btn btn-primary btn-purchase" onclick="showPharmacyForm()">شراء</button>`;
       return html;
     }
-    
+  
     function showPharmacyForm() {
       const dynamicContent = document.getElementById("modal-dynamic-content");
-      dynamicContent.innerHTML = `
-        <div class="modal-header"><h4>معلومات الصيدلية</h4></div>
+      dynamicContent.innerHTML = 
+        `<div class="modal-header"><h4>معلومات الصيدلية</h4></div>
         <div class="modal-body">
           <form id="pharmacy-form" class="pharmacy-form">
             <input type="text" id="pharmacy-name" class="form-control" placeholder="اسم الصيدلية" required>
@@ -796,14 +912,13 @@
             <textarea id="pharmacy-notes" class="form-control" placeholder="ملاحظات"></textarea>
             <button type="submit" class="btn btn-success btn-purchase mt-2">أرسل الطلب عبر الواتساب</button>
           </form>
-        </div>
-      `;
+        </div>`;
       document.getElementById("pharmacy-form").addEventListener("submit", function(e) {
         e.preventDefault();
         sendOrder();
       });
     }
-    
+  
     let whatsappWindow = null;
     function sendOrder() {
       const pharmacyName = document.getElementById("pharmacy-name").value.trim();
@@ -834,27 +949,56 @@
       message += `• *الاسم*: ${pharmacyName}%0A`;
       message += `• *رقم الهاتف*: ${pharmacyPhone}%0A`;
       message += `• *العنوان*: ${pharmacyAddress}%0A`;
-      if(pharmacyNotes) {
+      if (pharmacyNotes) {
         message += `• *الملاحظات*: ${pharmacyNotes}%0A`;
       }
       const whatsappNumber = "9647824130002";
       const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+  
+      // تحديث عداد الطلبات المحلي
       let orderCount = parseInt(localStorage.getItem("orderCount") || "0");
       orderCount++;
       localStorage.setItem("orderCount", orderCount);
       document.getElementById("order-count").textContent = orderCount;
+      
+      // حفظ بيانات الطلب في مجموعة "orders" بقاعدة Firebase مع تحديد معرف المتجر
+      const orderData = {
+        pharmacyName: pharmacyName,
+        pharmacyAddress: pharmacyAddress,
+        pharmacyPhone: pharmacyPhone,
+        pharmacyNotes: pharmacyNotes,
+        cart: cart.map(item => {
+          const product = products.find(p => p.id === item.id);
+          return {
+            name: product.name,
+            price: product.price,
+            quantity: item.quantity
+          };
+        }),
+        total: total,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        store: storeId
+      };
+      db.collection("orders").add(orderData)
+        .then(() => {
+          console.log("تم حفظ الطلب بنجاح في قاعدة البيانات.");
+        })
+        .catch(error => {
+          console.error("خطأ في حفظ الطلب:", error);
+        });
+  
       if (whatsappWindow && !whatsappWindow.closed) {
         whatsappWindow.close();
       }
       whatsappWindow = window.open(url, "_blank");
     }
-    
+  
     function openFavoritesModal() {
       const favModal = document.getElementById("favorites-modal");
       document.getElementById("favorites-content").innerHTML = renderFavorites();
       favModal.classList.add("active");
     }
-    
+  
     function renderFavorites() {
       const favProducts = products.filter(p => savedProducts.includes(p.id));
       if (favProducts.length === 0) {
@@ -870,13 +1014,13 @@
       html += `</div>`;
       return html;
     }
-    
+  
     function openMostSoldModal() {
       const modal = document.getElementById("most-sold-modal");
       document.getElementById("most-sold-content").innerHTML = renderMostSold();
       modal.classList.add("active");
     }
-    
+  
     function renderMostSold() {
       const mostSold = products.filter(p => mostSoldProductIds.includes(p.id));
       if (mostSold.length === 0) {
@@ -892,7 +1036,7 @@
       html += `</div>`;
       return html;
     }
-    
+  
     function scrollToProduct(productId) {
       const card = document.querySelector(`.product-card[data-product-id="${productId}"]`);
       if (card) {
@@ -903,44 +1047,43 @@
       document.getElementById("favorites-modal").classList.remove("active");
       document.getElementById("most-sold-modal").classList.remove("active");
     }
-    
-    // باقي وظائف التفاعل مع الواجهة (قائمة الجوانب، التبديل بين الثيمات، الخ...)
+  
     document.getElementById("toggle-sidebar").addEventListener("click", function(e) {
       document.getElementById("sidebar").classList.toggle("expanded");
       e.stopPropagation();
     });
-    
+  
     document.getElementById("menu-home").addEventListener("click", function() {
       this.querySelector("svg").classList.add("animate-home");
       setTimeout(() => this.querySelector("svg").classList.remove("animate-home"), 500);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    
+  
     document.getElementById("menu-search").addEventListener("click", function() {
       this.querySelector("svg").classList.add("animate-search");
       setTimeout(() => this.querySelector("svg").classList.remove("animate-search"), 500);
       const searchContainer = document.getElementById("search-bar-container");
       searchContainer.classList.toggle("active");
-      if(searchContainer.classList.contains("active")){
+      if (searchContainer.classList.contains("active")) {
         this.querySelector("svg").innerHTML = '<line x1="18" y1="6" x2="6" y2="18" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round"/>';
         document.getElementById("search-bar").focus();
       } else {
         this.querySelector("svg").innerHTML = '<path d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" fill="none"/>';
       }
     });
-    
+  
     document.getElementById("menu-most-sold").addEventListener("click", function() {
       this.querySelector("svg").classList.add("animate-heart");
       setTimeout(() => this.querySelector("svg").classList.remove("animate-heart"), 500);
       openMostSoldModal();
     });
-    
+  
     document.getElementById("menu-favorites").addEventListener("click", function() {
       this.querySelector("svg").classList.add("animate-heart");
       setTimeout(() => this.querySelector("svg").classList.remove("animate-heart"), 500);
       openFavoritesModal();
     });
-    
+  
     document.getElementById("menu-darkmode").addEventListener("click", function() {
       const icon = document.getElementById("darkmode-icon");
       icon.classList.add("toggle-animation");
@@ -964,7 +1107,7 @@
         icon.classList.remove("toggle-animation");
       }, 500);
     });
-    
+  
     document.getElementById("fab-cart").addEventListener("click", openCartModal);
     document.getElementById("modal-close").addEventListener("click", function() {
       document.getElementById("cart-modal").classList.remove("active");
@@ -975,7 +1118,7 @@
     document.getElementById("most-sold-modal-close").addEventListener("click", function() {
       document.getElementById("most-sold-modal").classList.remove("active");
     });
-    
+  
     function showImageModal(src) {
       const modal = document.getElementById("image-modal");
       document.getElementById("modal-image").src = src;
@@ -984,123 +1127,12 @@
     document.getElementById("image-modal-close").addEventListener("click", function() {
       document.getElementById("image-modal").classList.remove("active");
     });
-    
+  
     document.getElementById("search-bar").addEventListener("keyup", function() {
       filterProducts(this.value);
     });
-    
-    // --- قسم إدارة المنتجات عبر لوحة الإدارة باستخدام Firestore ---
-    
-    // عند إرسال نموذج إضافة المنتج يتم إرسال البيانات إلى Firestore
-    document.getElementById("add-product-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("product-name").value.trim();
-      const details = document.getElementById("product-details").value.trim();
-      const price = parseFloat(document.getElementById("product-price").value.trim());
-      const image = document.getElementById("product-image").value.trim();
-      if(name && !isNaN(price) && image){
-        const newProduct = {
-          name: name,
-          details: details,
-          price: price,
-          quantity: 0,
-          image: image
-        };
-        db.collection("products").add(newProduct)
-          .then(docRef => {
-            alert("تم إضافة المنتج بنجاح");
-            // لن تحتاج لاستدعاء loadProducts() هنا لأن المستمع (onSnapshot) سيقوم بالتحديث تلقائياً
-            renderAdminProducts();
-            this.reset();
-          })
-          .catch(error => {
-            console.error("Error adding product: ", error);
-          });
-      } else {
-        alert("يرجى التأكد من صحة المدخلات");
-      }
-    });
-    
-    // جلب المنتجات من Firestore مع التحديث في الوقت الحقيقي
-    function loadProducts() {
-      db.collection("products").onSnapshot(querySnapshot => {
-        products = [];
-        querySnapshot.forEach(doc => {
-          let product = doc.data();
-          product.id = doc.id; // استخدام معرّف الوثيقة من Firestore
-          products.push(product);
-        });
-        renderProducts();
-      }, error => {
-        console.error("Error fetching products: ", error);
-      });
-    }
-    
-    // عرض المنتجات في لوحة الإدارة (يمكنك تطويرها حسب الحاجة)
-    function renderAdminProducts() {
-      db.collection("products").get().then(querySnapshot => {
-        let html = "";
-        if(querySnapshot.empty) {
-          html = "<p>لا توجد منتجات مضافة.</p>";
-        } else {
-          querySnapshot.forEach(doc => {
-            const product = doc.data();
-            product.id = doc.id;
-            html += `<div class="product-list-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>${product.name}</strong> - ${product.price} IQD
-              </div>
-              <div>
-                <button class="btn btn-sm btn-warning" onclick="editProduct('${product.id}')">تعديل</button>
-                <button class="btn btn-sm btn-danger" onclick="deleteProduct('${product.id}')">حذف</button>
-              </div>
-            </div>`;
-          });
-        }
-        document.getElementById("admin-product-list").innerHTML = html;
-      }).catch(error => {
-        console.error("Error fetching admin products: ", error);
-      });
-    }
-    
-    // تعديل المنتج (مثال بسيط)
-    function editProduct(docId) {
-      const product = products.find(p => p.id === docId);
-      if(!product) return;
-      const newName = prompt("تعديل اسم المنتج:", product.name);
-      if(newName === null || newName.trim() === "") return;
-      const newDetails = prompt("تعديل تفاصيل المنتج:", product.details || "");
-      const newPrice = prompt("تعديل السعر:", product.price);
-      if(newPrice === null || isNaN(newPrice)) return;
-      const newImage = prompt("تعديل رابط صورة المنتج:", product.image);
-      if(newImage === null || newImage.trim() === "") return;
-      
-      db.collection("products").doc(docId).update({
-        name: newName.trim(),
-        details: newDetails,
-        price: parseFloat(newPrice),
-        image: newImage.trim()
-      }).then(() => {
-        alert("تم تعديل المنتج");
-        // لن تحتاج لاستدعاء loadProducts() لأن onSnapshot سيقوم بالتحديث
-        renderAdminProducts();
-      }).catch(error => {
-        console.error("Error updating product: ", error);
-      });
-    }
-    
-    // حذف المنتج
-    function deleteProduct(docId) {
-      if(confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
-        db.collection("products").doc(docId).delete().then(() => {
-          alert("تم حذف المنتج");
-          renderAdminProducts();
-        }).catch(error => {
-          console.error("Error deleting product: ", error);
-        });
-      }
-    }
-    
+  
+    /* وظائف لوحة الإدارة باستخدام Firebase */
     // زر الدخول للوحة الإدارة عبر الضغط السري (خمس مرات أسفل أيقونة الهامبرجر)
     let secretClickCount = 0;
     let secretClickTimer = null;
@@ -1122,8 +1154,8 @@
         }
       }
     });
-    
-    // عند تحميل الصفحة، نبدأ بجلب المنتجات من Firestore
+  
+    // عند تحميل الصفحة
     document.addEventListener("DOMContentLoaded", function() {
       loadProducts();
       renderAdminProducts();
