@@ -1100,6 +1100,40 @@
       });
     }
     
+
+
+// اضافة المنتجات الى قاعدة البيانات 
+document.getElementById("add-product-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const name = document.getElementById("product-name").value.trim();
+  const details = document.getElementById("product-details").value.trim();
+  const price = parseFloat(document.getElementById("product-price").value.trim());
+  const image = document.getElementById("product-image").value.trim();
+  if(name && !isNaN(price) && image){
+    const newProduct = {
+      name: name,
+      details: details,
+      price: price,
+      quantity: 0,
+      image: image
+    };
+    db.collection("products").add(newProduct)
+      .then(docRef => {
+        alert("تم إضافة المنتج بنجاح");
+        loadProducts();
+        renderAdminProducts();
+        this.reset();
+      })
+      .catch(error => {
+        console.error("Error adding product: ", error);
+      });
+  } else {
+    alert("يرجى التأكد من صحة المدخلات");
+  }
+});
+
+
+
     function editProduct(id) {
       const product = adminProductsList.find(p => p.id === id);
       const newName = prompt("تعديل اسم المنتج:", product.name);
@@ -1186,6 +1220,23 @@
       }
     });
     
+
+// جلب البيانات البطائق من المتجر 
+function loadProducts() {
+  db.collection("products").get().then(querySnapshot => {
+    products = [];
+    querySnapshot.forEach(doc => {
+      let product = doc.data();
+      product.id = doc.id; // استخدام معرّف الوثيقة من Firestore
+      products.push(product);
+    });
+    renderProducts();
+  }).catch(error => {
+    console.error("Error fetching products: ", error);
+  });
+}
+
+
   </script>
 </body>
 </html>
