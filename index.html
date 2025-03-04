@@ -646,95 +646,21 @@
   <br>
   
   <script>
-    /* بيانات المنتجات الثابتة */
-    const products = [
-      { id: 1, name: " pulmocodin 100ml. ", details: "    ", price: 2100, quantity: 0, image: "https://i.ibb.co/3VyZ8wK/photo.jpg" },
-      { id: 2, name: " COLDIN 100ml  ", details: "    ", price: 1275, quantity: 0, image: "https://i.ibb.co/7xBrkTZZ/photo.jpg" },
-      { id: 3, name: " Allermine100ml  ", details: "    ", price: 65000, quantity: 0, image: "https://i.ibb.co/hxz9MtBd/photo.jpg" },
-      { id:21 , name: " Isilin ", details: "    ", price: 2400, quantity: 0, image: "https://i.ibb.co/3m3Ztd3w/Background-Eraser.jpg" },
-     
-
-      { id: 4, name: "  samadol ", details: "    ", price:865, quantity: 0, image: "https://i.ibb.co/CSyyk1v/photo.jpg" },
-      { id: 5, name: " AVO-D  ", details: "    ", price: 4000, quantity: 0, image: "https://i.ibb.co/SW0rt7D/photo.jpg" },
-      { id: 6, name: "  Fucisam ", details: "    ", price: 1430, quantity: 0, image: "https://i.ibb.co/F4KTjbMy/photo.jpg" },
-      { id: 7, name: "SEDILAR", details: "    ", price: 14500, quantity: 0, image: "https://i.ibb.co/Mkn2VSnN/photo.jpg" },
-      { id: 8, name: " سامادول  ", details: "    ", price: 1275, quantity: 0, image: "https://i.ibb.co/tMWh8rQk/photo.jpg" },
-      { id: 9, name: "  SAMACYCLINE ", details: "    ", price:820, quantity: 0, image: "https://i.ibb.co/4np8xyTK/photo.jpg" },
-      { id: 10, name: " Folic acid  ", details: "    ", price:999, quantity: 0, image: "https://i.ibb.co/tp454RtJ/photo.jpg" },
-      { id: 11, name: " NYSTACORT  ", details: "    ", price: 990, quantity: 0, image: "https://i.ibb.co/RpMVHFkv/photo.jpg" },
-      { id: 12, name: " Butadin  ", details: "    ", price: 10420, quantity: 0, image: "https://i.ibb.co/F4Vqw1XP/photo.jpg" },
-      { id: 13, name: " Lorasam  ", details: "    ", price:805, quantity: 0, image: "https://i.ibb.co/Xxf9FMHx/photo.jpg" },
-      { id: 14, name: " ANTIPYROL CHILDREN  ", details: "    ", price: 1450, quantity: 0, image: "https://i.ibb.co/tMwLyz6n/photo.jpg" },
-      { id: 15, name: "  LIBRAXAM ", details: "    ", price: 19750, quantity: 0, image: "https://i.ibb.co/xt057kxz/photo.jpg" },
-      { id: 16, name: " SAMAVIT B6  ", details: "    ", price: 15000, quantity: 0, image: "https://i.ibb.co/BxQ4Qgt/photo.jpg" },
-      { id: 17, name: "  RAZYDYL ", details: "    ", price: 2500, quantity: 0, image: "https://i.ibb.co/Mxrc5cDK/photo.jpg" },
-      { id: 18, name: "  Handistan ", details: "    ", price: 1000, quantity: 0, image: "https://i.ibb.co/h1TB5RwZ/photo.jpg" },
-      { id: 19, name: " Bactrim forte comprime  ", details: "    ", price:6500, quantity: 0, image: "https://i.ibb.co/whRPLF0f/photo.jpg" },
-      { id: 20, name: "Glucophage 850 mg", details: "    ", price: 12500, quantity: 0, image: "https://i.ibb.co/KzzjtSZ2/photo.jpg" },
-      { id: 20, name: "Neuro max +", details: "    ", price: 17000, quantity: 0, image: "https://i.ibb.co/20BNg77h/photo.jpg" },
-      { id: 20, name: "omnic Tocas", details: "    ", price: 19500, quantity: 0, image: "https://i.ibb.co/PsZJqNfr/photo.jpg" },
-      { id: 20, name: "Aircom6", details: "    ", price: 9000, quantity: 0, image: "https://i.ibb.co/rhzwv0f/photo.jpg" },
-      { id: 20, name: "tegretol CR", details: "    ", price: 20500, quantity: 0, image: "https://i.ibb.co/kVRgk7XH/photo.jpg" },
-      { id: 22 , name: " stugeron ", details: "    ", price: 3320, quantity: 0, image: "https://i.ibb.co/0Rxbqhp6/Background-Eraser.jpg" },
-      { id: 23, name: " Bonviva 150ml ", details: "    ", price: 29000, quantity: 0, image: "https://i.ibb.co/qL2KTrfV/Background-Eraser.jpg" },
-      { id: 24, name: " sirdalud ", details: "    ", price: 5500, quantity: 0, image: "https://i.ibb.co/gb5xH7t8/Background-Eraser.jpg" },
-      { id: 25, name: "DEPO-MEDROL 40mg  ", details: "    ", price: 9500, quantity: 0, image: "https://i.ibb.co/B28Wvxh8/Background-Eraser.jpg" },
-      { id: 26, name: " tobradex ", details: "    ", price: 8250, quantity: 0, image: "https://i.ibb.co/27H9WJKp/Background-Eraser.jpg" },
-      { id: 27, name: " carvedilol HEXA 6,25 ", details: "    ", price: 11750, quantity: 0, image: "https://i.ibb.co/RkhG3gXg/Background-Eraser.jpg" },
-      { id: 28, name: " PERAMPANEL FILM coated tablets fycompa 4mg ", details: "    ", price: 44250, quantity: 0, image: "https://i.ibb.co/sLNvF7k/Background-Eraser.jpg" },
-      { id: 29, name: " yeniDOL   IV ", details: "    ", price: 1590, quantity: 0, image: "https://i.ibb.co/m5wwBkBZ/Background-Eraser.jpg" },
-      { id: 30, name: "Lopid 600  ", details: "    ", price: 26250, quantity: 0, image: "https://i.ibb.co/zhhPTqVP/Background-Eraser.jpg" },
-      { id: 31, name: " daivobet ", details: "    ", price: 50000, quantity: 0, image: "https://i.ibb.co/8Lv5f84b/Background-Eraser.jpg" },
-      { id: 32, name: " Ebetrex 2.5mg ", details: "    ", price: 10000, quantity: 0, image: "https://i.ibb.co/rRsv9L7M/Background-Eraser.jpg" },
-      { id: 33, name: " provron ", details: "    ", price: 6500, quantity: 0, image: "https://i.ibb.co/PvtbDZFJ/Background-Eraser.jpg" },
-      { id: 34, name: " Dorofen ", details: "    ", price: 21900, quantity: 0, image: "https://i.ibb.co/ynDXKS4k/Background-Eraser.jpg" },
-      { id: 35, name: " melio ", details: "    ", price: 9500, quantity: 0, image: "https://i.ibb.co/20zG3R60/Background-Eraser.jpg" },
-      { id: 36, name: " ASPEGIC ", details: "    ", price: 9000, quantity: 0, image: "https://i.ibb.co/ym1BCfBw/Background-Eraser.jpg" },
-      { id: 37, name: " GLYCERYL TRINITRATE ", details: "    ", price: 12000, quantity: 0, image: "https://i.ibb.co/My5ThPNP/Background-Eraser.jpg" },
-      { id: 38, name: "IBUROFEN", details: "", price: 1300, quantity: 0, image: "https://i.ibb.co/Hft5HnYy/Background-Eraser.jpg" },
-      { id: 39, name: "LOSART", details: "", price: 4100, quantity: 0, image: "https://i.ibb.co/Hfcc5qzV/Background-Eraser.jpg" },
-      { id: 40, name: "PIOXIGA", details: "", price: 17800, quantity: 0, image: "https://i.ibb.co/jvJHqc7r/Background-Eraser.jpg" },
-      { id: 41, name: "COLDIN AL HAYAT", details: "", price: 1260, quantity: 0, image: "https://i.ibb.co/35vxbgh0/Background-Eraser.jpg" },
-      { id: 42, name: "PIOSPAN", details: "", price: 2850, quantity: 0, image: "https://i.ibb.co/Ng90vT0D/Background-Eraser.jpg" },
-      { id: 43, name: "PREGAFIX", details: "", price: 15200, quantity: 0, image: "https://i.ibb.co/45tVN2c/Background-Eraser.jpg" },
-      { id: 44, name: "MONTIX", details: "", price: 8000, quantity: 0, image: "https://i.ibb.co/wV4sNtp/Background-Eraser.jpg" },
-      { id: 45, name: "Laritia", details: "", price: 1350, quantity: 0, image: "https://i.ibb.co/Qq7vTwc/Background-Eraser.jpg" },
-      { id: 46, name: "Decopect", details: "", price: 1370, quantity: 0, image: "https://i.ibb.co/sdLgY5xv/Background-Eraser.jpg" },
-      { id: 47, name: "CYCLO-PROGYNOVA", details: "", price: 5800, quantity: 0, image: "https://i.ibb.co/VYHdfSDH/Background-Eraser.jpg" },
-      { id: 48, name: "LARIUS", details: "", price: 2300, quantity: 0, image: "https://i.ibb.co/FkrKmS6w/Background-Eraser.jpg" },
-      { id: 49, name: "NO-VOMIT", details: "", price: 3500, quantity: 0, image: "https://i.ibb.co/Sw9rpKgp/Background-Eraser.jpg" },
-      { id: 50, name: "EXTRA", details: "", price: 1300, quantity: 0, image: "https://i.ibb.co/4wcP6L5H/Background-Eraser.jpg" },
-      { id: 51, name: "LIDOCAINE", details: "", price: 100, quantity: 0, image: "https://i.ibb.co/C5J9Fwfv/Background-Eraser.jpg" },
-      { id: 52, name: "PIOTOPIN", details: "", price: 1900, quantity: 0, image: "https://i.ibb.co/Y4Qcfv3k/Background-Eraser.jpg" },
-      { id: 53, name: "PIOSTAN", details: "", price: 1600, quantity: 0, image: "https://i.ibb.co/bj88wRJd/Background-Eraser.jpg" },
-      { id: 54, name: "EXIDIL", details: "", price: 850, quantity: 0, image: "https://i.ibb.co/My3wnfRF/Background-Eraser.jpg" },
-      { id: 55, name: "ASPIN 100 ", details: "", price: 570, quantity: 0, image: "https://i.ibb.co/27gQ1TgJ/Background-Eraser.jpg" },
-      { id: 56, name: "DERMOCAL", details: "", price: 795, quantity: 0, image: "https://i.ibb.co/hJfrvVMW/Background-Eraser.jpg" },
-      { id: 57, name: "SAMILIN", details: "", price: 770, quantity: 0, image: "https://i.ibb.co/8DxMmx6G/Background-Eraser.jpg" },
-      { id: 58, name: "مكلودين 10 mg", details: "", price: 630, quantity: 0, image: "https://i.ibb.co/TM4Wdm7s/Background-Eraser.jpg" },
-      { id: 59, name: "DEXON", details: "", price: 13000, quantity: 0, image: "https://i.ibb.co/Qjj2GDxY/Background-Eraser.jpg" },
-      { id: 60, name: "SEDLAR", details: "", price: 1000, quantity: 0, image: "https://i.ibb.co/WWjG3JW1/Background-Eraser.jpg" },
-      { id: 61, name: "DOMPERISAM 10 ", details: "", price: 11400, quantity: 0, image: "https://i.ibb.co/C3FwXrkF/Background-Eraser.jpg" },
-      { id: 62, name: "SAMAPATALIN", details: "", price: 1400, quantity: 0, image: "https://i.ibb.co/zhC0WTVf/Background-Eraser.jpg" },
-      { id: 63, name: "SAMALAFIL", details: "", price: 7130, quantity: 0, image: "https://i.ibb.co/Z6FnKYT4/Background-Eraser.jpg" },
-      { id: 64, name: "AZITHROSAM", details: "", price: 1475, quantity: 0, image: "https://i.ibb.co/qLRMXfbM/Background-Eraser.jpg" },
-      { id: 65, name: "COLDIN", details: "", price: 19800, quantity: 0, image: "https://i.ibb.co/5W05L1qW/Background-Eraser.jpg" },
-      { id: 66, name: "DAPAXOSIN", details: "", price: 17000, quantity: 0, image: "https://i.ibb.co/jkcvyS0W/Background-Eraser.jpg" },
-      // يمكن إضافة المزيد من المنتجات الثابتة هنا
+    /* بيانات المنتجات الثابتة (يمكن استخدامها كبيانات أولية في حال لم يتم تحميل أي بيانات من Firestore) */
+    let products = [
+      { id: 1, name: "pulmocodin 100ml.", details: "", price: 2100, quantity: 0, image: "https://i.ibb.co/3VyZ8wK/photo.jpg" },
+      { id: 2, name: "COLDIN 100ml", details: "", price: 1275, quantity: 0, image: "https://i.ibb.co/7xBrkTZZ/photo.jpg" },
+      { id: 3, name: "Allermine100ml", details: "", price: 65000, quantity: 0, image: "https://i.ibb.co/hxz9MtBd/photo.jpg" },
+      { id: 21, name: "Isilin", details: "", price: 2400, quantity: 0, image: "https://i.ibb.co/3m3Ztd3w/Background-Eraser.jpg" },
+      // ... باقي المنتجات الثابتة
     ];
     
-    // دمج المنتجات المضافة من واجهة الإدارة
-    const adminProducts = JSON.parse(localStorage.getItem("adminProducts")) || [];
-    adminProducts.forEach(prod => {
-      if (!products.some(p => p.id === prod.id)) {
-        products.push(prod);
-      }
-    });
-    
+    // هنا تظل بيانات localStorage الخاصة بالحفظ المؤقت أو المحفوظات، لكننا نعتمد بشكل أساسي على Firestore
     let cart = [];
     let savedProducts = JSON.parse(localStorage.getItem("savedProducts")) || [];
     const mostSoldProductIds = [2, 5, 7, 10];
-    
+  
+    // دالة عرض المنتجات (يتم استخدامها بعد جلب البيانات من Firestore)
     function renderProducts(productArray = products) {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = "";
@@ -750,7 +676,7 @@
         card.innerHTML = `
           ${badge}
           <img src="${product.image}" alt="${product.name}" ondblclick="showImageModal('${product.image}')">
-          <button class="save-btn ${isSaved(product.id) ? 'active' : ''}" onclick="toggleSave(${product.id}, this)">
+          <button class="save-btn ${isSaved(product.id) ? 'active' : ''}" onclick="toggleSave('${product.id}', this)">
             <svg viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
                 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3
@@ -762,9 +688,9 @@
             ${ product.details ? `<div class="product-details">${product.details}</div>` : "" }
             <div class="product-price">${product.price} IQD</div>
             <div class="quantity-controls">
-              <button onclick="updateQuantity(${product.id}, -1, this)">-</button>
+              <button onclick="updateQuantity('${product.id}', -1, this)">-</button>
               <span id="qty-${product.id}">0</span>
-              <button onclick="updateQuantity(${product.id}, 1, this)">+</button>
+              <button onclick="updateQuantity('${product.id}', 1, this)">+</button>
             </div>
           </div>
         `;
@@ -847,7 +773,7 @@
         const product = products.find(p => p.id === item.id);
         const productTotal = product.price * item.quantity;
         total += productTotal;
-        html += `<div class="cart-item" onclick="scrollToProduct(${product.id})">
+        html += `<div class="cart-item" onclick="scrollToProduct('${product.id}')">
           <div>${product.name} (×${item.quantity})</div>
           <div>${productTotal} IQD</div>
         </div>`;
@@ -936,7 +862,7 @@
       }
       let html = `<div class="modal-header"><h4>المحفوظات</h4></div><div class="modal-body">`;
       favProducts.forEach(product => {
-        html += `<div class="cart-item" onclick="scrollToProduct(${product.id})">
+        html += `<div class="cart-item" onclick="scrollToProduct('${product.id}')">
           <div>${product.name}</div>
           <div>${product.price} IQD</div>
         </div>`;
@@ -958,7 +884,7 @@
       }
       let html = `<div class="modal-header"><h4>الأكثر مبيعا</h4></div><div class="modal-body">`;
       mostSold.forEach(product => {
-        html += `<div class="cart-item" onclick="scrollToProduct(${product.id})">
+        html += `<div class="cart-item" onclick="scrollToProduct('${product.id}')">
           <div>${product.name}</div>
           <div>${product.price} IQD</div>
         </div>`;
@@ -978,6 +904,7 @@
       document.getElementById("most-sold-modal").classList.remove("active");
     }
     
+    // باقي وظائف التفاعل مع الواجهة (قائمة الجوانب، التبديل بين الثيمات، الخ...)
     document.getElementById("toggle-sidebar").addEventListener("click", function(e) {
       document.getElementById("sidebar").classList.toggle("expanded");
       e.stopPropagation();
@@ -1062,115 +989,9 @@
       filterProducts(this.value);
     });
     
-    renderProducts();
-    document.addEventListener("DOMContentLoaded", function() {
-      const memberCountEl = document.getElementById("member-count");
-      if(memberCountEl) {
-        const count = 9 + 5000;
-        memberCountEl.textContent = count;
-      }
-      const storedOrderCount = localStorage.getItem("orderCount") || "0";
-      document.getElementById("order-count").textContent = storedOrderCount;
-    });
+    // --- قسم إدارة المنتجات عبر لوحة الإدارة باستخدام Firestore ---
     
-    /* وظائف لوحة الإدارة الداخلية */
-    let adminProductsList = JSON.parse(localStorage.getItem("adminProducts")) || [];
-    let nextProductId = parseInt(localStorage.getItem("nextProductId")) || 100;
-    const adminProductListDiv = document.getElementById("admin-product-list");
-    
-    function renderAdminProducts() {
-      adminProductListDiv.innerHTML = "";
-      if(adminProductsList.length === 0) {
-        adminProductListDiv.innerHTML = "<p>لا توجد منتجات مضافة.</p>";
-        return;
-      }
-      adminProductsList.forEach(product => {
-        const div = document.createElement("div");
-        div.className = "product-list-item d-flex justify-content-between align-items-center";
-        div.innerHTML = `
-          <div>
-            <strong>${product.name}</strong> - ${product.price} IQD
-          </div>
-          <div>
-            <button class="btn btn-sm btn-warning" onclick="editProduct(${product.id})">تعديل</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">حذف</button>
-          </div>
-        `;
-        adminProductListDiv.appendChild(div);
-      });
-    }
-    
-
-
-// اضافة المنتجات الى قاعدة البيانات 
-document.getElementById("add-product-form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const name = document.getElementById("product-name").value.trim();
-  const details = document.getElementById("product-details").value.trim();
-  const price = parseFloat(document.getElementById("product-price").value.trim());
-  const image = document.getElementById("product-image").value.trim();
-  if(name && !isNaN(price) && image){
-    const newProduct = {
-      name: name,
-      details: details,
-      price: price,
-      quantity: 0,
-      image: image
-    };
-    db.collection("products").add(newProduct)
-      .then(docRef => {
-        alert("تم إضافة المنتج بنجاح");
-        loadProducts();
-        renderAdminProducts();
-        this.reset();
-      })
-      .catch(error => {
-        console.error("Error adding product: ", error);
-      });
-  } else {
-    alert("يرجى التأكد من صحة المدخلات");
-  }
-});
-
-
-
-    function editProduct(id) {
-      const product = adminProductsList.find(p => p.id === id);
-      const newName = prompt("تعديل اسم المنتج:", product.name);
-      if(newName !== null && newName.trim() !== "") {
-        product.name = newName.trim();
-      }
-      const newDetails = prompt("تعديل تفاصيل المنتج:", product.details || "");
-      if(newDetails !== null) {
-        product.details = newDetails;
-      }
-      const newPrice = prompt("تعديل السعر:", product.price);
-      if(newPrice !== null && !isNaN(newPrice)) {
-        product.price = parseFloat(newPrice);
-      }
-      const newImage = prompt("تعديل رابط صورة المنتج:", product.image);
-      if(newImage !== null && newImage.trim() !== "") {
-        product.image = newImage.trim();
-      }
-      localStorage.setItem("adminProducts", JSON.stringify(adminProductsList));
-      renderAdminProducts();
-      renderProducts();
-    }
-    
-    function deleteProduct(id) {
-      if(confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
-        adminProductsList = adminProductsList.filter(p => p.id !== id);
-        localStorage.setItem("adminProducts", JSON.stringify(adminProductsList));
-        renderAdminProducts();
-        renderProducts();
-      }
-    }
-    
-    document.getElementById("admin-close").addEventListener("click", function() {
-      document.getElementById("admin-modal").classList.remove("active");
-    });
-    
-    // حدث إرسال نموذج إضافة المنتج
+    // عند إرسال نموذج إضافة المنتج يتم إرسال البيانات إلى Firestore
     document.getElementById("add-product-form").addEventListener("submit", function(e) {
       e.preventDefault();
       const name = document.getElementById("product-name").value.trim();
@@ -1179,26 +1000,108 @@ document.getElementById("add-product-form").addEventListener("submit", function(
       const image = document.getElementById("product-image").value.trim();
       if(name && !isNaN(price) && image){
         const newProduct = {
-          id: nextProductId,
           name: name,
           details: details,
           price: price,
           quantity: 0,
           image: image
         };
-        adminProductsList.push(newProduct);
-        localStorage.setItem("adminProducts", JSON.stringify(adminProductsList));
-        nextProductId++;
-        localStorage.setItem("nextProductId", nextProductId);
-        renderAdminProducts();
-        renderProducts();
-        this.reset();
+        db.collection("products").add(newProduct)
+          .then(docRef => {
+            alert("تم إضافة المنتج بنجاح");
+            // لن تحتاج لاستدعاء loadProducts() هنا لأن المستمع (onSnapshot) سيقوم بالتحديث تلقائياً
+            renderAdminProducts();
+            this.reset();
+          })
+          .catch(error => {
+            console.error("Error adding product: ", error);
+          });
       } else {
         alert("يرجى التأكد من صحة المدخلات");
       }
     });
     
-    /* زر الدخول للوحة الإدارة عبر الضغط السري (خمس مرات أسفل أيقونة الهامبرجر) */
+    // جلب المنتجات من Firestore مع التحديث في الوقت الحقيقي
+    function loadProducts() {
+      db.collection("products").onSnapshot(querySnapshot => {
+        products = [];
+        querySnapshot.forEach(doc => {
+          let product = doc.data();
+          product.id = doc.id; // استخدام معرّف الوثيقة من Firestore
+          products.push(product);
+        });
+        renderProducts();
+      }, error => {
+        console.error("Error fetching products: ", error);
+      });
+    }
+    
+    // عرض المنتجات في لوحة الإدارة (يمكنك تطويرها حسب الحاجة)
+    function renderAdminProducts() {
+      db.collection("products").get().then(querySnapshot => {
+        let html = "";
+        if(querySnapshot.empty) {
+          html = "<p>لا توجد منتجات مضافة.</p>";
+        } else {
+          querySnapshot.forEach(doc => {
+            const product = doc.data();
+            product.id = doc.id;
+            html += `<div class="product-list-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>${product.name}</strong> - ${product.price} IQD
+              </div>
+              <div>
+                <button class="btn btn-sm btn-warning" onclick="editProduct('${product.id}')">تعديل</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteProduct('${product.id}')">حذف</button>
+              </div>
+            </div>`;
+          });
+        }
+        document.getElementById("admin-product-list").innerHTML = html;
+      }).catch(error => {
+        console.error("Error fetching admin products: ", error);
+      });
+    }
+    
+    // تعديل المنتج (مثال بسيط)
+    function editProduct(docId) {
+      const product = products.find(p => p.id === docId);
+      if(!product) return;
+      const newName = prompt("تعديل اسم المنتج:", product.name);
+      if(newName === null || newName.trim() === "") return;
+      const newDetails = prompt("تعديل تفاصيل المنتج:", product.details || "");
+      const newPrice = prompt("تعديل السعر:", product.price);
+      if(newPrice === null || isNaN(newPrice)) return;
+      const newImage = prompt("تعديل رابط صورة المنتج:", product.image);
+      if(newImage === null || newImage.trim() === "") return;
+      
+      db.collection("products").doc(docId).update({
+        name: newName.trim(),
+        details: newDetails,
+        price: parseFloat(newPrice),
+        image: newImage.trim()
+      }).then(() => {
+        alert("تم تعديل المنتج");
+        // لن تحتاج لاستدعاء loadProducts() لأن onSnapshot سيقوم بالتحديث
+        renderAdminProducts();
+      }).catch(error => {
+        console.error("Error updating product: ", error);
+      });
+    }
+    
+    // حذف المنتج
+    function deleteProduct(docId) {
+      if(confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+        db.collection("products").doc(docId).delete().then(() => {
+          alert("تم حذف المنتج");
+          renderAdminProducts();
+        }).catch(error => {
+          console.error("Error deleting product: ", error);
+        });
+      }
+    }
+    
+    // زر الدخول للوحة الإدارة عبر الضغط السري (خمس مرات أسفل أيقونة الهامبرجر)
     let secretClickCount = 0;
     let secretClickTimer = null;
     document.getElementById("sidebar").addEventListener("click", function(e) {
@@ -1220,23 +1123,19 @@ document.getElementById("add-product-form").addEventListener("submit", function(
       }
     });
     
-
-// جلب البيانات البطائق من المتجر 
-function loadProducts() {
-  db.collection("products").get().then(querySnapshot => {
-    products = [];
-    querySnapshot.forEach(doc => {
-      let product = doc.data();
-      product.id = doc.id; // استخدام معرّف الوثيقة من Firestore
-      products.push(product);
+    // عند تحميل الصفحة، نبدأ بجلب المنتجات من Firestore
+    document.addEventListener("DOMContentLoaded", function() {
+      loadProducts();
+      renderAdminProducts();
+      const memberCountEl = document.getElementById("member-count");
+      if(memberCountEl) {
+        const count = 9 + 5000;
+        memberCountEl.textContent = count;
+      }
+      const storedOrderCount = localStorage.getItem("orderCount") || "0";
+      document.getElementById("order-count").textContent = storedOrderCount;
     });
-    renderProducts();
-  }).catch(error => {
-    console.error("Error fetching products: ", error);
-  });
-}
-
-
   </script>
+  
 </body>
 </html>
